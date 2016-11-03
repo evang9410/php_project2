@@ -1,10 +1,10 @@
-<?
-Class City{
-    private $weight;
+<?php
+class City{
     private $name;
     private $country;
+    private $weight;
 
-    public function __construct($name, $country, $weight){
+    public function __construct($name="", $country="", $weight=-1){
         $this->name = $name;
         $this->country = $country;
         $this->weight = $weight;
@@ -23,10 +23,10 @@ Class City{
         $this->country = $country;
     }
     public function getWeight(){
-        return $this->country;
+        return $this->weight;
     }
-    public function setWeight($w){
-        $this->weight = $w
+    public function setWeight($weight){
+        $this->weight = $weight;
     }
 }
 ?>
