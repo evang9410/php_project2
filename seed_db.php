@@ -2,6 +2,7 @@
 $file = fopen("cities.txt", "r");
 require_once("class.citiesDAO.php");
 $cDAO = new CitiesDAO();
+$count = 0;
 while(!feof($file)){
     $line = fgets($file);
     $weight = substr($line, 0, strrpos($line,';'));
@@ -11,8 +12,8 @@ while(!feof($file)){
     $city = implode(",",array_slice($csv,0,-1));
     $cDAO->insert_city($city,$country,$weight);
     $count++;
-    if($count % 100 == 0){
-        echo "$count";
+    if($count % 1000 == 0){
+        echo "$count ";
     }
 }
 ?>

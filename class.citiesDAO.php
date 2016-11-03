@@ -5,7 +5,7 @@
 class CitiesDAO{
     private $pdo;
     public function __construct(){
-        $this->pdo = new PDO('mysql:host=waldo2.dawsoncollege.qc.ca;dbname=cs1432581','CS1432581', 'sforuism');
+        $this->pdo = new PDO('mysql:host=korra.dawsoncollege.qc.ca;dbname=CS1432581','CS1432581', 'illifere');
     }
 
     public function insert_city($name, $country, $weight){
