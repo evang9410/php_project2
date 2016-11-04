@@ -1,5 +1,5 @@
 <?php
-class City{
+class City implements JsonSerializable{
     private $name;
     private $country;
     private $weight;
@@ -27,6 +27,10 @@ class City{
     }
     public function setWeight($weight){
         $this->weight = $weight;
+    }
+
+    public function jsonSerialize(){
+        return ['name' => $this->name, 'country' => $this->country, 'weight' => $this->weight];
     }
 }
 ?>
