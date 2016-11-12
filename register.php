@@ -16,6 +16,7 @@ if($_SERVER["REQUEST_METHOD"] === 'POST'){
             // else redirect to register with login_id taken message
             if($cdao->register_user($user)){
                 session_start();
+                $_SESSION['login_id'] = $login_id;
                 header('location: ./search_index.php');
             }else{
                 header('location: ./signup.html');

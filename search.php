@@ -13,7 +13,4 @@ if(isset($_GET['q'])){
 }else{
     echo "failed";
 }
-
-
-
- ?>
+?>

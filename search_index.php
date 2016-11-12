@@ -1,3 +1,20 @@
+<?php
+require_once 'class.citiesDAO.php';
+$cdao = new CitiesDAO();
+session_start();
+session_regenerate_id();
+$login_id = $_SESSION['login_id'];
+echo $login_id."<br/>";
+echo "seach history<br/>";
+$user_search_history= $cdao->get_user_history($login_id);
+foreach($user_search_history as $city){
+    echo $city["city_name"];
+}
+if(isset($_POST['logout'])){
+    session_destroy();
+    header('Location: ./index.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,15 +25,7 @@
     <label> Search </label> <input id="s"type="text" name="search"/>
 </form>
 <div id="autocomplete"></div>
-<?php
-session_start();
-session_regenerate_id();
-$login_id = $_SESSION['login_id'];
-if(isset($_POST['logout'])){
-    session_destroy();
-    header('Location: ./index.php');
-}
-?>
+
 <script>
     $("#s").keyup(function(e){
         var key = e.keyCode || e.which
@@ -36,7 +45,7 @@ if(isset($_POST['logout'])){
                 //use json object to populate the #autocomplete div
                 if(json.cities.length == 0){ // if the search returns no results.
                     div.innerHTML = "No results.";
-                    return; // I can easily just do if(json.cities.lenght != 0)
+                    return; // I can easily just do if(json.cities.length != 0)
                             // and encapulate the rest in there. But...no. Sorry.
                 }
                 div.innerHTML = "";
