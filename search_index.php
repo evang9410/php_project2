@@ -4,12 +4,7 @@ $cdao = new CitiesDAO();
 session_start();
 session_regenerate_id();
 $login_id = $_SESSION['login_id'];
-echo $login_id."<br/>";
-echo "seach history<br/>";
 $user_search_history= $cdao->get_user_history($login_id);
-foreach($user_search_history as $city){
-    echo $city["city_name"];
-}
 if(isset($_POST['logout'])){
     session_destroy();
     header('Location: ./index.php');
@@ -19,20 +14,29 @@ if(isset($_POST['logout'])){
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./styles/style.css">
 </head>
 <body>
-<form method="get" action="">
-    <label> Search </label> <input id="s"type="text" name="search"/>
-</form>
-<div id="autocomplete"></div>
+    <div id='container'><?php echo "Welcome $login_id!"; ?></div>
+    <div id='wrapper'>
+
+            <label> Search </label> <input id="s"type="text" name="search" list="autocomplete"/>
+            <datalist id="autocomplete"></datalist>
+            <form action="" method="POST">
+                <button type="submit" class="btn btn-default" name="logout">Logout</button>
+            </form>
+            </body>
+            </html>
+    </div>
 
 <script>
     $("#s").keyup(function(e){
         var key = e.keyCode || e.which
+        console.log(key);
         var search = this.value;
-        var div = document.getElementById('autocomplete');
+        var datalist = document.getElementById('autocomplete');
         if(search == ""){ // if the textbox is empty, don't query database.
-            div.innerHTML = "";
+            $("#autocomplete").empty();
             return; // leave the function in an preposterous way, sorry.
         }
 
@@ -44,15 +48,20 @@ if(isset($_POST['logout'])){
             success:function(json){
                 //use json object to populate the #autocomplete div
                 if(json.cities.length == 0){ // if the search returns no results.
-                    div.innerHTML = "No results.";
+                    var option = document.createElement('option');
+                    option.value = "No results";
+                    datalist.appendChild(option);
                     return; // I can easily just do if(json.cities.length != 0)
                             // and encapulate the rest in there. But...no. Sorry.
                 }
-                div.innerHTML = "";
+                $("#autocomplete").empty();
                 for(var i = 0; i < json.cities.length; i++){
                     var city = json.cities[i];
                     //console.log(city.name);
-                    div.innerHTML += city.name +", " + city.country + "<br/>";
+                    var option = document.createElement('option');
+                    option.value = city.name + ", " + city.country;
+                    //div.innerHTML += city.name +", " + city.country + "<br/>";
+                    datalist.appendChild(option);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -60,10 +69,10 @@ if(isset($_POST['logout'])){
             }
         });
 
+
+        if(key == 13){
+            $("#s").val(datalist.firstChild.value);
+        }
+
     })
 </script>
-<form action="" method="POST">
-    <button type="submit" class="btn btn-default" name="logout">Logout</button>
-</form>
-</body>
-</html>

@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] === 'POST'){
                     $cdao -> free_user($login_id);
                 }else{
                     // redirect to timeout page
-                    header('Location: https://google.com');
+                    header('Location: ./timeout.html');
                 }
             }
             if(!$cdao->is_user_timed_out($login_id)){

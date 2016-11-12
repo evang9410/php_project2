@@ -1,0 +1,15 @@
+#container{
+    width: 100vw;
+    height: 25vh;
+    background-color: red;
+    text-align: center;
+    font-family:    Arial, Helvetica, sans-serif;
+    font-size:      40px;
+    font-weight:    bold;
+}
+
+#wrapper{
+    width: 100vw;
+    height: 40vh;
+    text-align: center;
+}
