@@ -71,7 +71,16 @@ if(isset($_POST['logout'])){
 
 
         if(key == 13){
-            $("#s").val(datalist.firstChild.value);
+            var item = $("#s").val(datalist.firstChild.value);
+            $.ajax({
+                url:"history.php",
+                data:{item: item},
+                type:"POST",
+                dataType:"json",
+                success:function(json){
+                    
+                }
+            })
         }
 
     })
