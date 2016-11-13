@@ -20,7 +20,8 @@ if(isset($_POST['logout'])){
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
 </head>
 <body>
@@ -33,18 +34,27 @@ if(isset($_POST['logout'])){
                     <ul id = "history_list" class="list-group"></ul>
                 </div>
             </div>
-            <div class = "col-md-4 col-md-offset-2">
-                <form method = "POST" action="">
-                    <label> Search </label> <input id="s"type="text" class="form-control" name="search" list="autocomplete" autocomplete="off"/>
-                    <button type="submit" class="btn btn-primary" name="submit" onclick="onSubmit">Submit</button>
-                    <datalist id="autocomplete"></datalist>
-                </form>
+            <div class = "col-md-4" id="search_group">
+                <div class="input-group">
+                    <form method = "POST" action="" class="input-group">
+                        <input id="s"type="text" class="form-control" name="search" list="autocomplete" autocomplete="off" placeholder="Search Cities..."/>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" name="submit" onclick="onSubmit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </span>
+                        <datalist id="autocomplete"></datalist>
+                    </form>
+                </div>
 
             </div>
         </div>
-        <form action="" method="POST">
-            <button type="submit" class="btn btn-default" name="logout">Logout</button>
-        </form>
+    </div>
+        <div>
+            <form action="" method="POST">
+                <button type="submit" class="btn btn-danger" name="logout">Logout</button>
+            </form>
+        <div>
 
     </div>
 </body>
