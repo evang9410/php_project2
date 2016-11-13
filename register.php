@@ -21,8 +21,8 @@ if($_SERVER["REQUEST_METHOD"] === 'POST'){
             }else{
                 header('location: ./signup.html');
             }
-
-
+        }else{
+            header('Location: ./signup.html');
         }
     }
 }

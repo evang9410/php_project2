@@ -147,7 +147,7 @@ class CitiesDAO{
      * Gets the users search history and returns it in an associtative array.
      */
     public function get_user_history($login_id){
-        $q = 'SELECT city_name FROM history WHERE login_id = ? LIMIT 5';
+        $q = 'SELECT DISTINCT city_name FROM history WHERE login_id = ? ORDER BY id DESC LIMIT 5';
         try{
             $stmt = $this->pdo->prepare($q);
             $stmt->bindParam(1,$login_id);
@@ -161,7 +161,7 @@ class CitiesDAO{
      * Inserts the city into the users history.
      */
     public function insert_user_history($login_id, $city){
-        $insert_query = 'INSERT INTO history VALUES (?, ?)';
+        $insert_query = 'INSERT INTO history(login_id, city_name) VALUES (?, ?)';
         try{
             $stmt = $this->pdo->prepare($insert_query);
             $stmt->bindParam(1,$login_id);

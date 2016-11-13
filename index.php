@@ -15,6 +15,7 @@
             <label for="pwd">Password:</label>
             <input type="password" name="password" class="form-control" id="pwd">
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button type="submit" class="btn btn-default">Login</button>
         </form>
+        <button type="reg" class="btn btn-primary" onclick="location.href = './signup.html';">Register</button>
 </div>

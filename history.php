@@ -5,10 +5,6 @@ $cdao = new CitiesDAO();
 session_start();
 session_regenerate_id();
 $login_id = $_SESSION['login_id'];
-if(isset($_POST['item'])){
-    if(is_string($_POST['item'])){
-        $city_name = $_POST['item'];
-        
-    }
-}
+$user_history = $cdao->get_user_history($login_id);
+echo json_encode($user_history);
  ?>
