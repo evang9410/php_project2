@@ -23,3 +23,11 @@
 .row{
     height: 100%;
 }
+
+.foot{
+    margin-top:6%;
+}
+
+#search_index{
+    background-image: url("/res/search.jpg");
+}

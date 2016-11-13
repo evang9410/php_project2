@@ -24,7 +24,7 @@ if(isset($_POST['logout'])){
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
 </head>
-<body>
+<body id="search_index">
     <div class="" id='header'><?php echo "Welcome $login_id!"; ?></div>
     <div class="container-fluid" id='wrapper'>
         <div class="row">
@@ -50,13 +50,12 @@ if(isset($_POST['logout'])){
             </div>
         </div>
     </div>
-        <div>
+    <footer class="footer">
+        <div class="col-md-2 foot">
             <form action="" method="POST">
                 <button type="submit" class="btn btn-danger" name="logout">Logout</button>
             </form>
-        <div>
-
-    </div>
+       </div>
 </body>
 </html>
 
