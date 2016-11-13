@@ -35,7 +35,7 @@ if(isset($_POST['logout'])){
             </div>
             <div class = "col-md-4 col-md-offset-2">
                 <form method = "POST" action="">
-                    <label> Search </label> <input id="s"type="text" class="form-control" name="search" list="autocomplete"/>
+                    <label> Search </label> <input id="s"type="text" class="form-control" name="search" list="autocomplete" autocomplete="off"/>
                     <button type="submit" class="btn btn-primary" name="submit" onclick="onSubmit">Submit</button>
                     <datalist id="autocomplete"></datalist>
                 </form>
