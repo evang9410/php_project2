@@ -8,6 +8,7 @@ $user_search_history= $cdao->get_user_history($login_id);
 if(isset($_POST["search"])){
     if(!empty($_POST["search"])){
         $city = strip_tags($_POST["search"]);
+        echo $city;
         $cdao->insert_user_history($login_id, $city, time());
     }
 }
@@ -36,7 +37,7 @@ if(isset($_POST['logout'])){
             </div>
             <div class = "col-md-4" id="search_group">
                 <div class="input-group">
-                    <form method = "POST" action="" class="input-group">
+                    <form id = "form" method = "POST" action="" class="input-group">
                         <input id="s"type="text" class="form-control" name="search" list="autocomplete" autocomplete="off" placeholder="Search Cities..."/>
                         <span class="input-group-btn">
                             <button type="submit" class="btn btn-primary" name="submit" onclick="onSubmit">
@@ -81,9 +82,8 @@ if(isset($_POST['logout'])){
             success:function(json){
                 //use json object to populate the #autocomplete div
                 if(json.cities.length == 0){ // if the search returns no results.
-                    var option = document.createElement('option');
-                    option.value = "No results";
-                    datalist.appendChild(option);
+                    console.log("empty set");
+                    // prevent form from submitting.
                     return; // I can easily just do if(json.cities.length != 0)
                             // and encapulate the rest in there. But...no. Sorry.
                 }
