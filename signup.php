@@ -1,3 +1,27 @@
+<?php
+require_once('class.User.php');
+require_once 'class.citiesDAO.php';
+$cdao = new CitiesDAO();
+
+if($_SERVER["REQUEST_METHOD"] === 'POST'){
+    if(isset($_POST['register_login']) & isset($_POST['register_password'])){
+        if(!empty($_POST['register_login']) & !empty($_POST['register_password'])){
+            // register user if login doesnt exist.
+            if(!$cdao->user_exists($_POST['register_login'])){
+              $login_id = $_POST['register_login'];
+              $hashed_pass = password_hash($_POST['register_password'], PASSWORD_DEFAULT);
+              $user = new User($login_id,$hashed_pass);
+              $cdao->register_user($user);
+              session_start();
+              $_SESSION['login_id'] = $login_id;
+              header('location: ./search_index.php');
+            }else{
+              echo "user id is taken";
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +35,7 @@
             <h2 id = "signup_header"> Sign up for our super awesome website </h2>
             <div class="col-md-3 center-block" id="signup_form">
 
-                <form action="register.php" method="POST">
+                <form action="" method="POST">
                   <div class="form-group">
                     <label id="signup_text">Login id:</label>
                     <input type="text" name="register_login"class="form-control">

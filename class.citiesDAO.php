@@ -134,13 +134,16 @@ class CitiesDAO{
      * login_id is unique
      */
     public function user_exists($login_id){
-        $query = "SELECT login_id FROM users WHERE login_id = $login_id";
+        $query = "SELECT login_id FROM users WHERE login_id =?";
+
         $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(1,$login_id);
         $stmt->execute();
-        if(!$stmt->fetch()){ // if no result set, user is unique
-            return false;
+        $rows = count($stmt->fetchAll(PDO::FETCH_ASSOC));
+        if($rows == 0){
+          return false;
         }else{
-            return true;
+          return true;
         }
     }
     /**

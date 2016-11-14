@@ -20,7 +20,7 @@
                   </div>
                   <button type="submit" class="btn btn-default">Login</button>
                 </form>
-                <button type="reg" class="btn btn-primary" onclick="location.href = './signup.html';">Register</button>
+                <button type="reg" class="btn btn-primary" onclick="location.href = './signup.php';">Register</button>
             </div>
         </div>
     </div>
