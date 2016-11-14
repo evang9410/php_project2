@@ -8,7 +8,7 @@ $user_search_history= $cdao->get_user_history($login_id);
 if(isset($_POST["search"])){
     if(!empty($_POST["search"])){
         $city = strip_tags($_POST["search"]);
-        $cdao->insert_user_history($login_id, $city);
+        $cdao->insert_user_history($login_id, $city, time());
     }
 }
 if(isset($_POST['logout'])){

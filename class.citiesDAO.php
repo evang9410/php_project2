@@ -150,7 +150,7 @@ class CitiesDAO{
      * Gets the users search history and returns it in an associtative array.
      */
     public function get_user_history($login_id){
-        $q = 'SELECT DISTINCT city_name FROM history WHERE login_id = ? ORDER BY id DESC LIMIT 5';
+        $q = 'SELECT city_name FROM history WHERE login_id = ? ORDER BY date DESC LIMIT 5';
         try{
             $stmt = $this->pdo->prepare($q);
             $stmt->bindParam(1,$login_id);
@@ -163,17 +163,57 @@ class CitiesDAO{
     /**
      * Inserts the city into the users history.
      */
-    public function insert_user_history($login_id, $city){
-        $insert_query = 'INSERT INTO history(login_id, city_name) VALUES (?, ?)';
+    public function insert_user_history($login_id, $city, $date){
+        $insert_query = 'INSERT INTO history(login_id, city_name, date) VALUES (?, ?, ?)';
+        $update_query = 'UPDATE history SET date = ? WHERE id = ?';
+        // Check if the user already has searched for this city.
+        $id = $this->history_entry_exists($login_id, $city);
+        $date = date('Y-m-d H:i:s',$date);
+        // if id == false, insert history
+        if($id == false){
+            try{
+                $stmt = $this->pdo->prepare($insert_query);
+                $stmt->bindParam(1,$login_id);
+                $stmt->bindParam(2,$city);
+                $stmt->bindParam(3,$date);
+                $stmt->execute();
+            }catch(PDOException $e){
+                echo $e->getMessage();
+            }
+        }else{
+            // update the record.
+            try{
+                $stmt = $this->pdo->prepare($update_query);
+                $stmt->bindParam(1, $date);
+                $stmt->bindParam(2, $id[0]);
+                $stmt->execute();
+            }catch(PDOException $e){
+                echo $e->getMessage();
+            }
+        }
+    }
+    /**
+     * Returns if the city exists in the databse.
+     * if it does not returns false.
+     * if the entry exists, returns it's id.
+     **/
+    public function history_entry_exists($login_id, $city){
+        $query = 'SELECT id from history WHERE login_id = ? AND city_name = ?';
         try{
-            $stmt = $this->pdo->prepare($insert_query);
+            $stmt = $this->pdo->prepare($query);
             $stmt->bindParam(1,$login_id);
             $stmt->bindParam(2,$city);
             $stmt->execute();
+            if($stmt->rowCount() > 0){
+                return $stmt->fetch();
+            }else{
+                return false;
+            }
         }catch(PDOException $e){
             echo $e->getMessage();
         }
     }
+
     /**
      * Returns true if the user has is timed out
      **/
