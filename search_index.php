@@ -3,12 +3,15 @@ require_once 'class.citiesDAO.php';
 $cdao = new CitiesDAO();
 session_start();
 session_regenerate_id();
+if(!isset($_SESSION['login_id'])){
+  header("Location: ./index.php");
+}
 $login_id = $_SESSION['login_id'];
+
 $user_search_history= $cdao->get_user_history($login_id);
 if(isset($_POST["search"])){
     if(!empty($_POST["search"])){
         $city = strip_tags($_POST["search"]);
-        echo $city;
         $cdao->insert_user_history($login_id, $city, time());
     }
 }
@@ -37,10 +40,10 @@ if(isset($_POST['logout'])){
             </div>
             <div class = "col-md-4" id="search_group">
                 <div class="input-group">
-                    <form id = "form" method = "POST" action="" class="input-group">
+                    <form id = "form" method = "POST" action="" class="input-group" onsubmit=" return onSubmit()">
                         <input id="s"type="text" class="form-control" name="search" list="autocomplete" autocomplete="off" placeholder="Search Cities..."/>
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary" name="submit" onclick="onSubmit">
+                            <button type="submit" class="btn btn-primary" name="submit" >
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </span>
@@ -83,6 +86,14 @@ if(isset($_POST['logout'])){
                 //use json object to populate the #autocomplete div
                 if(json.cities.length == 0){ // if the search returns no results.
                     console.log("empty set");
+                    $("#autocomplete").empty();
+                    var option = document.createElement("option");
+                    option.value = "No result";
+
+
+                    console.log(datalist);
+                    datalist.appendChild(option);
+                    console.log(datalist.options[0].value);
                     // prevent form from submitting.
                     return; // I can easily just do if(json.cities.length != 0)
                             // and encapulate the rest in there. But...no. Sorry.
@@ -103,7 +114,7 @@ if(isset($_POST['logout'])){
             }
         });
     });
-
+    // get the users history on load.
     $(document).ready(function(){
         // load users search history if it exists.
         $.ajax({
@@ -122,9 +133,11 @@ if(isset($_POST['logout'])){
         })
     });
     function onSubmit(){
-        var searchBox = document.getElementById("s");
-        if(s.value == undefined | s.value == ""){
-                s.value = document.getElementByID("autocomplete").firstChild.innerHTML;
+        if(document.getElementById("autocomplete").options[0].value == "No result"){
+            document.getElementById("s").value = null;
+            return false;
+        }else{
+            return true;
         }
     }
 </script>

@@ -7,8 +7,8 @@ if($_SERVER["REQUEST_METHOD"] === 'POST'){
         if(!empty($_POST['login']) & !empty($_POST['password'])){
             //query database and if login == success sesstion_start()
             //redirect to search
-            $login_id = $_POST['login'];
-            $pass = $_POST['password'];
+            $login_id = htmlentities($_POST['login']);
+            $pass = htmlentities($_POST['password']);
             $timeout = $cdao->get_user_timeout_time($login_id);
 
             if($timeout != false){
